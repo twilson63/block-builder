@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>BlockBuilder Editor</title>
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="components/codemirror/lib/codemirror.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="navbar-header">
+        <div class="container">
+          <a class="navbar-brand" href="#">Block Builder</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>Editor</h3>
+          <div id="code"></div>
+          <button id="run" class="btn">Run</button>
+        </div>
+        <div id="game" class="col-md-8"></div>
+      </div>
+    </div>
+    <script src="components/codemirror/lib/codemirror.js"></script>
+    <script src="components/codemirror/mode/javascript/javascript.js"></script>    
+    <script src="js/bundle.js"></script>
+    <script>
+      var codeSrc = CodeMirror(document.getElementById('code'));
+      var runButton = document.getElementById('run');
+      runButton.addEventListener("click", function(e) {
+        eval(codeSrc.getValue());
+      });
+    </script>
+    
+  </body>
+</html>
