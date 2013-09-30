@@ -1,0 +1,21 @@
+{
+  "name": "blockbuilder",
+  "version": "0.0.0",
+  "authors": [
+    "Tom Wilson <tom@jackhq.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.2.0-rc.2",
+    "angular": "1.2.0-rc.2",
+    "bootstrap": "~3.0.0",
+    "codemirror": "~3.18.0"
+  }
+}
