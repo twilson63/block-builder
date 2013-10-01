@@ -6,9 +6,46 @@
     <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css">
   </head>
   <body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Block Builder</a>
+        <span ng-show="user">
+          <a class="btn btn-primary navbar-btn" href="/">
+            Home
+          </a>
+        </span>
+        <span ng-show="user">
+          <a class="btn btn-primary navbar-btn" href="/gallery">
+            Gallery
+          </a>
+        </span>
+        <span ng-show="user">
+          <a class="btn btn-primary navbar-btn" href="/editor.html" target="_new">
+            Editor
+          </a>
+        </span>
+        <div class="pull-right">
+          <span ng-show="user">
+            <a class="btn btn-warning navbar-btn" ng-click="logout()">
+              Logout
+            </a>
+          </span>
+          <span ng-hide="user"><a class="btn btn-warning navbar-btn" ng-click="login()">Login</a></span>
+        </div>
+        <span class="pull-right" ng-show="user">
+          <div class="navbar-text" style="color: #fff;" ng-bind="user.email"></div>  
+        </span>
+        </div>
+      </div>
+    </nav>
+
     <ng-view></ng-view>
     <script src="components/angular/angular.js"></script>
     <script src="components/angular-route/angular-route.js"></script>
+    <script src="//cdn.firebase.com/v0/firebase.js"></script>
+    <script src="//cdn.firebase.com/v0/firebase-simple-login.js"></script>
+    <script type='text/javascript' src='https://login.persona.org/include.js'></script>
+    <script src="components/angular-fire/angularFire.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app.js"></script>
     <script src="js/templates.js"></script>
   </body>

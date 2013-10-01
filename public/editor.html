@@ -8,19 +8,32 @@
 
   </head>
   <body>
-    <nav class="navbar navbar-inverse">
-      <div class="navbar-header">
-        <div class="container">
-          <a class="navbar-brand" href="#">Block Builder</a>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Block Builder</a>
+        <div class="pull-right">
+          <span>
+            <a class="btn btn-warning navbar-btn" ng-click="logout()">
+              Close
+            </a>
+          </span>
         </div>
       </div>
     </nav>
+    
     <div class="row">
-      <div class="col-md-3 col-md-offset-1">
-        <h3>Editor</h3>
-        <div id="code"></div>
-        <button id="run" class="btn">Run</button>
-        <div id="errors"></div>
+      <div class="col-md-4">
+        <div style="margin-left: 5px;">
+          <h3>Editor</h3>
+          <div id="code" style="margin-bottom: 10px;border: 1px solid #000;" ></div>
+          <div class="pull-right">
+            <button id="run" class="btn btn-primary">Run</button>
+            <button id="picture" class="btn btn-primary">Picture</button>
+            <button id="publish" class="btn btn-primary">Publish</button>
+          </div>
+          <h3>&nbsp;</h3>
+          <div id="errors" class="alert alert-warning"></div>
+        </div>
       </div>
       <div id="game" class="col-md-8"></div>
     </div>
@@ -35,7 +48,14 @@
         var src = codeSrc.getValue();
         var result = JSHINT(src);
         if (!result) {
-          document.getElementById('errors').innerText = JSON.stringify(JSHINT.errors);
+          var html = "<ul>";
+          JSHINT.errors.forEach(function(err) {
+            console.log(err.reason);
+            html += "<li>" + err.reason + "</li>";
+          });
+          html += "</ul>";
+          console.log(html);
+          document.getElementById('errors').innerHtml = html;
         }
         // TODO - Need to sandbox code in closure
         if (result) eval(codeSrc.getValue());

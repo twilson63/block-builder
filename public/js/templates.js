@@ -12,8 +12,10 @@ angular.module('app').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('templates/gallery.html',
     "<div class=\"jumbotron\">\n" +
-    "  <h2>Gallery</h2>\n" +
-    "  <p>Coming Soon!</p>  \n" +
+    "  <center>\n" +
+    "    <h2>Gallery</h2>\n" +
+    "    <p>Coming Soon!</p>\n" +
+    "  </center>  \n" +
     "</div>"
   );
 
@@ -21,10 +23,12 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   $templateCache.put('templates/main.html',
     "<div class=\"jumbotron\">\n" +
     "  <div class=\"container\">\n" +
-    "   <h1>Block Builder</h1>\n" +
+    "    <center><h1>Block Builder</h1></center>\n" +
     "  </div>\n" +
-    "  <a href=\"/viewer.html\" target=\"_new\">Viewer</a>\n" +
-    "</div>"
+    "</div>\n" +
+    "<center>\n" +
+    "  <img src=\"img/blockbuilder.png\">\n" +
+    "</center>"
   );
 
 
