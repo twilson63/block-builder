@@ -5,7 +5,6 @@
     <title>BlockBuilder Editor</title>
     <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="components/codemirror/lib/codemirror.css">
-
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -20,47 +19,63 @@
         </div>
       </div>
     </nav>
-    
     <div class="row">
-      <div class="col-md-4">
-        <div style="margin-left: 5px;">
+      <div class="col-md-4" ng-app="Editor">
+        <div style="margin-left: 5px;" ng-controller="MainCtrl">
           <h3>Editor</h3>
-          <div id="code" style="margin-bottom: 10px;border: 1px solid #000;" ></div>
+          <div style="margin-bottom: 10px;border: 1px solid #000;" >
+            <textarea ui-codemirror ng-model="code"></textarea>
+          </div>
           <div class="pull-right">
-            <button id="run" class="btn btn-primary">Run</button>
-            <button id="picture" class="btn btn-primary">Picture</button>
-            <button id="publish" class="btn btn-primary">Publish</button>
+            <button class="btn btn-primary" ng-click="run()">Run</button>
+            <button class="btn btn-primary" ng-click="publish()">Publish</button>
           </div>
           <h3>&nbsp;</h3>
-          <div id="errors" class="alert alert-warning"></div>
+          <div class="alert alert-warning">
+            <ul>
+              <li ng-repeat="err in errors">
+                <em>{{err.reason}}</em> L{{err.line}}:C{{err.character}}
+                
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div id="game" class="col-md-8"></div>
     </div>
+    <script src="//cdn.firebase.com/v0/firebase.js"></script>
+    <script src="//cdn.firebase.com/v0/firebase-simple-login.js"></script>
+    <script type='text/javascript' src='https://login.persona.org/include.js'></script>
     <script src="components/codemirror/lib/codemirror.js"></script>
     <script src="components/codemirror/mode/javascript/javascript.js"></script> 
+    <script src="components/angular/angular.js"></script>
+    <script src="components/angular-ui-codemirror/ui-codemirror.js"></script>
+    <script src="components/angular-fire/angularFire.js"></script>
     <script src="js/jshint-2.1.11.js"></script>
     <script src="js/bundle.js"></script>
     <script>
-      var codeSrc = CodeMirror(document.getElementById('code'));
-      var runButton = document.getElementById('run');
-      runButton.addEventListener("click", function(e) {
-        var src = codeSrc.getValue();
-        var result = JSHINT(src);
-        if (!result) {
-          var html = "<ul>";
-          JSHINT.errors.forEach(function(err) {
-            console.log(err.reason);
-            html += "<li>" + err.reason + "</li>";
-          });
-          html += "</ul>";
-          console.log(html);
-          document.getElementById('errors').innerHtml = html;
-        }
-        // TODO - Need to sandbox code in closure
-        if (result) eval(codeSrc.getValue());
-        
+      angular.module('Editor', ['ui.codemirror', 'firebase'])
+        .value('projects', function(angularFireCollection) {
+          var url = 'https://block-builder.firebaseio.com';
+          return  angularFireCollection(new Firebase(url));
+          
+        })
+        .controller('MainCtrl', function MainCtrl($scope, angularFire, projects) {
+          $scope.run = function() {
+            $scope.errors = [];
+            if (!JSHINT($scope.code)) {
+              $scope.errors = JSHINT.errors;
+            } else {
+              eval($scope.code);
+            }
+          };
+
+          $scope.publish = function() {
+            var name = prompt('Save As: ');
+            projects.push({ code: $scope.code, name: name, author:  })
+          };
       });
+
     </script>
     
   </body>
