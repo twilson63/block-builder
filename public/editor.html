@@ -55,7 +55,7 @@
     <script src="js/bundle.js"></script>
     <script>
       angular.module('Editor', ['ui.codemirror', 'firebase'])
-        .value('projects', function(angularFireCollection) {
+        .factory('projects', function(angularFireCollection) {
           var url = 'https://block-builder.firebaseio.com';
           return  angularFireCollection(new Firebase(url));
           
@@ -72,7 +72,7 @@
 
           $scope.publish = function() {
             var name = prompt('Save As: ');
-            projects.push({ code: $scope.code, name: name, author:  })
+            projects.add({ code: $scope.code, name: name, author: 'unknown' });
           };
       });
 
