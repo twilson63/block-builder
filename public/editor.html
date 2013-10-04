@@ -9,17 +9,10 @@
   <body>
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Block Builder</a>
-        <div class="pull-right">
-          <span>
-            <a class="btn btn-warning navbar-btn" ng-click="close()">
-              Close
-            </a>
-          </span>
-        </div>
+        <a class="navbar-brand" href="/">Block Builder</a>
       </div>
     </nav>
-    <div class="row" ng-cloak>
+    <div class="row" ng-show="project">
       <div class="col-md-4" ng-app="Editor">
         <div style="margin-left: 5px;" ng-controller="MainCtrl">
           <h3>Editor - {{project.name || 'untitled'}}</h3>
@@ -66,6 +59,8 @@
           if (id) { 
             var ref = new Firebase('https://block-builder.firebaseio.com/users/' + user + '/' + id);
             angularFire(ref, $scope, "project");
+          } else {
+            $scope.project = {};
           }
           
           $scope.run = function() {
@@ -84,10 +79,6 @@
             }
             window.close();
           };
-
-          $scope.close = function() {
-            window.close();
-          }
       });
 
     </script>
