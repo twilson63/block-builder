@@ -37,10 +37,6 @@ angular.module('app')
   });
 
 angular.module('app')
-  .controller('EditorCtrl', function($scope) {
-  });
-
-angular.module('app')
   .controller('GalleryCtrl', function($scope) {
 
   });

@@ -5,11 +5,6 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('templates/editor.html',
-    ""
-  );
-
-
   $templateCache.put('templates/gallery.html',
     "<div class=\"jumbotron\">\n" +
     "  <center>\n" +
