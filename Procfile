@@ -1,1 +1,1 @@
-web: grunt connect
+web: node server.js 
