@@ -26,9 +26,17 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "    <center><h1>Block Builder</h1></center>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<center>\n" +
+    "<center ng-hide=\"user\">\n" +
     "  <img src=\"img/blockbuilder.png\">\n" +
-    "</center>"
+    "</center>\n" +
+    "<div class=\"container\" ng-show=\"user\">\n" +
+    "  <h3>My Projects</h3>\n" +
+    "   <ul>\n" +
+    "     <li ng-repeat=\"project in projects\">\n" +
+    "       <a ng-href=\"/editor.html?id={{project.$id}}\" target=\"_new\">{{project.name}}</a>\n" +
+    "     </li>\n" +
+    "   </ul>\n" +
+    "</div>"
   );
 
 

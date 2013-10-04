@@ -2,7 +2,7 @@
   "name": "blockbuilder",
   "version": "0.0.0",
   "description": "A tool for building voxeljs structures with code",
-  "main": "index.js",
+  "main": "public/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

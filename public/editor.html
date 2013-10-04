@@ -12,7 +12,7 @@
         <a class="navbar-brand" href="#">Block Builder</a>
         <div class="pull-right">
           <span>
-            <a class="btn btn-warning navbar-btn" ng-click="logout()">
+            <a class="btn btn-warning navbar-btn" ng-click="close()">
               Close
             </a>
           </span>
@@ -22,9 +22,9 @@
     <div class="row">
       <div class="col-md-4" ng-app="Editor">
         <div style="margin-left: 5px;" ng-controller="MainCtrl">
-          <h3>Editor</h3>
+          <h3>Editor - {{project.name || 'untitled'}}</h3>
           <div style="margin-bottom: 10px;border: 1px solid #000;" >
-            <textarea ui-codemirror ng-model="code"></textarea>
+            <textarea ui-codemirror ng-model="project.code"></textarea>
           </div>
           <div class="pull-right">
             <button class="btn btn-primary" ng-click="run()">Run</button>
@@ -56,24 +56,38 @@
     <script>
       angular.module('Editor', ['ui.codemirror', 'firebase'])
         .factory('projects', function(angularFireCollection) {
-          var url = 'https://block-builder.firebaseio.com';
+          var user = localStorage.getItem("user");
+          var url = 'https://block-builder.firebaseio.com/users/' + user;
           return  angularFireCollection(new Firebase(url));
-          
         })
         .controller('MainCtrl', function MainCtrl($scope, angularFire, projects) {
+          var user = localStorage.getItem("user");
+          var id = window.location.search.split('=')[1];
+          if (id) { 
+            var ref = new Firebase('https://block-builder.firebaseio.com/users/' + user + '/' + id);
+            angularFire(ref, $scope, "project");
+          }
+          
           $scope.run = function() {
             $scope.errors = [];
-            if (!JSHINT($scope.code)) {
+            if (!JSHINT($scope.project.code)) {
               $scope.errors = JSHINT.errors;
             } else {
-              eval($scope.code);
+              eval($scope.project.code);
             }
           };
 
           $scope.publish = function() {
-            var name = prompt('Save As: ');
-            projects.add({ code: $scope.code, name: name, author: 'unknown' });
+            if (!$scope.project.name) {
+              var name = prompt('Save As: ');
+              projects.add({ code: $scope.project.code, name: name, author:  user});
+            }
+            window.close();
           };
+
+          $scope.close = function() {
+            window.close();
+          }
       });
 
     </script>

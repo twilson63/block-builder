@@ -10,6 +10,11 @@ angular.module('app', ['ngRoute','firebase'])
     $locationProvider.html5Mode(true);
   })
   .constant('fburl', 'https://block-builder.firebaseio.com')
+  .factory('projects', function(angularFireCollection) {
+    var user = localStorage.getItem("user");
+    var url = 'https://block-builder.firebaseio.com/users/' + user;
+    return  angularFireCollection(new Firebase(url));
+  })
   .run(function($rootScope, angularFireAuth, fburl) {
     var ref = new Firebase(fburl);
     angularFireAuth.initialize(ref, {scope: $rootScope, name: "user"});
@@ -17,11 +22,12 @@ angular.module('app', ['ngRoute','firebase'])
       angularFireAuth.login("persona");
     };
     $rootScope.logout = function() {
+      localStorage.setItem('user', null);
       angularFireAuth.logout();
     };
-    // $rootScope.$on("angularFireAuth:login", function(evt, user) {
-    //   console.log(user);
-    // });
+    $rootScope.$on("angularFireAuth:login", function(evt, user) {
+      localStorage.setItem('user', user.id);
+    });
     $rootScope.isAuthor = function(email) {
       return $rootScope.user ? $rootScope.user.email === email : false;
     };

@@ -3,6 +3,14 @@
     <center><h1>Block Builder</h1></center>
   </div>
 </div>
-<center>
+<center ng-hide="user">
   <img src="img/blockbuilder.png"></img>
 </center>
+<div class="container" ng-show="user">
+  <h3>My Projects</h3>
+   <ul>
+     <li ng-repeat="project in projects">
+       <a ng-href="/editor.html?id={{project.$id}}" target="_new">{{project.name}}</a>
+     </li>
+   </ul>
+</div>
